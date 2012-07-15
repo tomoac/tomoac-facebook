@@ -5,7 +5,7 @@ class TomoacFacebookPackage extends Package {
 
      protected $pkgHandle = 'tomoac_facebook';
      protected $appVersionRequired = '5.4.0';
-     protected $pkgVersion = '0.1.2';
+     protected $pkgVersion = '0.2.1';
 
      public function getPackageDescription() {
           return t('Tomoac facebook');

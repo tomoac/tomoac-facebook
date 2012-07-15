@@ -1,23 +1,11 @@
 <?xml version="1.0"?>
 <schema version="0.3">
-	<table name="btFacebookTomoac">
+	<table name="btTomoacFacebook">
 		<field name="bID" type="I">
 			<key />
 			<unsigned />
 		</field>
-		<field name="user" type="C" size="255" />
-		<field name="type" type="C" size="255" />
-		<field name="url" type="C" size="255" />
-		<field name="send" type="C" size="255" />
-		<field name="layout" type="C" size="255" />
-		<field name="width" type="C" size="255" />
-		<field name="height" type="C" size="255" />
-		<field name="faces" type="C" size="255" />
-		<field name="verb" type="C" size="255" />
-		<field name="color" type="C" size="255" />
-		<field name="border" type="C" size="255" />
-		<field name="font" type="C" size="255" />
-		<field name="stream" type="C" size="255" />
-		<field name="header" type="C" size="255" />
+		<field name="contents" type="X" />
+		<field name="options" type="X" />
 	</table>
 </schema>

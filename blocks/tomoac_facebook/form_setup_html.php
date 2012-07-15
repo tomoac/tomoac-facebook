@@ -1,33 +1,33 @@
 <?php  defined('C5_EXECUTE') or die(_("Access Denied."));
+
 	$form = Loader::helper('form');
-	if($b != '' && intval($b->getBlockID()) > 0) {
-		$db = Loader::db();
-		$q = $db->query("select * FROM btFacebookTomoac WHERE bID = ".$b->getBlockID()." LIMIT 1");
-		$row = $q->fetchRow();
+	$db = Loader::db();
 
-		$user = $row['user'];
-		$type = $row['type'];
+	if(($bID > 0)||($b != '' && intval($b->getBlockID()) > 0)) {
+		$rows = $db->query("SELECT * FROM btTomoacFacebook WHERE bID=".$b->getBlockID()." LIMIT 1");
+		$row = $rows->fetchrow();
+		$contents = json_decode( $row{'contents'} );
 
-		$url = $row['url'];
-		$send = $row['send'];
-		$layout = $row['layout'];
-		$width = $row['width'];
-		$height = $row['height'];
-		$faces = $row['faces'];
-		$verb = $row['verb'];
-		$color = $row['color'];
-		$border = $row['border'];
-		$font = $row['font'];
-		$stream = $row['stream'];
-		$header = $row['header'];
-	} else {
-		$user = '<your appid>';
+		$appid = $contents->{'appid'};
+		$url = $contents->{'url'};
+		$width = $contents->{'width'};
+		$height = $contents->{'height'};
+		$color = $contents->{'color'};
+		$faces = $contents->{'faces'};
+		$border = $contents->{'border'};
+		$stream = $contents->{'stream'};
+		$header = $contents->{'header'};
+	}
+	else {
+		$appid = '<your appid>';
 		$url = 'http://www.facebook.com/<your uri>';
-		$width = 300;
+		$width = '292';
+		$height = '';
 		$color = 'light';
-		$faces = '1';
-		$stream = '1';
-		$header = '1';
+		$faces = 'true';
+		$border = '';
+		$stream = 'true';
+		$header = 'true';
 	}
 ?>
 
@@ -36,17 +36,18 @@
 <!-- ================ Facebook ================ -->
 <div id="ccm-button-facebook-tab">
 <?php
-//	print_r($_REQUEST);
 	echo '<br /><table>';
-	echo '<tr><td>'.t('AppID').'</td><td>'.'&nbsp;'.$form->text('user', $user) . "</td></tr>";
+	echo '<tr><td>'.t('AppID').'</td><td>'.'&nbsp;'.$form->text('appid', $appid) . "</td></tr>";
 	echo '<tr><td>'.t('Facebook Page URL').'</td><td>'.'&nbsp;'.$form->text('url', $url, array('size' => '50')) . "</td></tr>";
 	echo '<tr><td>'.t('Width').'</td><td>'.'&nbsp;'.$form->text('width', $width, array('size' => '4')) . "</td></tr>";
 	echo '<tr><td>'.t('Height (option)').'</td><td>'.'&nbsp;'.$form->text('height', $height, array('size' => '4')) . "</td></tr>";
-	echo '<tr><td>'.t('Color Scheme').'</td><td>'.'&nbsp;'.$form->select('color', array('light' => 'light', 'dark' => 'dark'), $color) . "</td></tr>";
-	echo '<tr><td>'.t('Show Faces').'</td><td>'.'&nbsp;'.$form->checkbox('faces', '1', $faces) . "</td></tr>";
+	echo '<tr><td>'.t('Color Scheme').'</td><td>'.'&nbsp;'.$form->select('color', array(
+						'light' => 'light', 
+						'dark' => 'dark'), $color) . "</td></tr>";
+	echo '<tr><td>'.t('Show Faces').'</td><td>'.'&nbsp;'.$form->checkbox('faces', 'true', $faces) . "</td></tr>";
 	echo '<tr><td>'.t('Border Color (option)').'</td><td>'.'&nbsp;'.$form->text('border', $border) . "</td></tr>";
-	echo '<tr><td>'.t('Stream').'</td><td>'.'&nbsp;'.$form->checkbox('stream', '1', $stream) . "</td></tr>";
-	echo '<tr><td>'.t('Header').'</td><td>'.'&nbsp;'.$form->checkbox('header', '1', $header) . "</td></tr>";
+	echo '<tr><td>'.t('Stream').'</td><td>'.'&nbsp;'.$form->checkbox('stream', 'true', $stream) . "</td></tr>";
+	echo '<tr><td>'.t('Header').'</td><td>'.'&nbsp;'.$form->checkbox('header', 'true', $header) . "</td></tr>";
 	echo '</table>';
 ?>
 </div>
